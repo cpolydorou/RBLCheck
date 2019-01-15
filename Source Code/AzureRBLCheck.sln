@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureRBLCheck", "AzureRBLCheck\AzureRBLCheck.csproj", "{BF7378DB-C5E2-4E63-BCE5-102EC544114D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureRBLCheck", "AzureRBLCheck\AzureRBLCheck.csproj", "{BF7378DB-C5E2-4E63-BCE5-102EC544114D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

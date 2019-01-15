@@ -62,6 +62,43 @@ namespace AzureRBLCheck
 
             return hostList;
         }
+
+        public void AddHost(string Hostname, string IPAddress)
+        {
+            // Create a host entity
+            HostEntity host = new HostEntity();
+            host.PartitionKey = IPAddress;
+            host.RowKey = Hostname;
+
+            // Create the TableOperation object that inserts the host entity.
+            TableOperation insertOperation = TableOperation.Insert(host);
+
+            // Execute the insert operation.
+            //HostTable.Execute(insertOperation);
+            var result = HostTable.ExecuteAsync(insertOperation).Result;
+        }
+
+        public void RemoveHost(string IPAddress)
+        {
+            // Create the table query.
+            TableQuery<HostEntity> rangeQuery = new TableQuery<HostEntity>().Where(
+                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, IPAddress));
+
+            // Print the fields for each customer.
+            TableContinuationToken token = null;
+            do
+            {
+                TableQuerySegment<HostEntity> resultSegment = HostTable.ExecuteQuerySegmentedAsync(rangeQuery, token).Result;
+                token = resultSegment.ContinuationToken;
+
+                foreach (HostEntity entity in resultSegment.Results)
+                {
+                    TableOperation removeOperation = TableOperation.Delete(entity);
+                    HostTable.ExecuteAsync(removeOperation);
+                }
+            } while (token != null);
+        }
+
         public List<RBL> GetRBLs()
         {
             List<RBL> rblList = new List<RBL>();
