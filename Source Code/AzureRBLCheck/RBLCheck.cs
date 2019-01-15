@@ -3,19 +3,31 @@ using System.Collections.Generic;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace AzureRBLCheck
 {
     public static class RBLCheck
     {
         [FunctionName("RBLCheck")]
-        public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
+        public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
-            // Create the resources
-            Azure az = new Azure("cpolydorouazurerbl", "ICJj4Hc350b2OKPrdMRIcErOt/bfgzn3jGeIoJJCSPbwfdFoNuCdVfuvBK/RHBtVpll3U4hU99dbev+gsbG71w==");
-
             // Log the start
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+
+            // Initialize the configuration object
+            var config = new ConfigurationBuilder()
+                             .SetBasePath(context.FunctionAppDirectory)
+                             .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+                             .AddEnvironmentVariables()
+                             .Build();
+
+            // Get the storage account information
+            string storageAccountName = config["StorageAccountName"];
+            string storageAccountKey = config["StorageAccountKey"];
+
+            // Create the resources
+            Azure az = new Azure(storageAccountName, storageAccountKey);
 
             // Read the RBLs from the configuration
             List<RBL> MyRBLs = az.GetRBLs();
