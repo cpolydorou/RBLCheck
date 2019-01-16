@@ -8,12 +8,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace AzureRBLCheck
 {
-    public static class RemoveHost
+    public static class CheckHost
     {
-        [FunctionName("RemoveHost")]
+        [FunctionName("CheckHost")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
@@ -32,40 +33,42 @@ namespace AzureRBLCheck
             string storageAccountName = config["StorageAccountName"];
             string storageAccountKey = config["StorageAccountKey"];
 
-            // Check the supplied values
-            if(storageAccountKey == null)
-                return (ActionResult)new BadRequestObjectResult("Failed to read the storage account key from the configuration.");
-            if(storageAccountName == null)
-                return (ActionResult)new BadRequestObjectResult("Failed to read the storage account name from the configuration.");
-
-            // Create the resources
-            Azure az;
-            try
-            {
-                az = new Azure(storageAccountName, storageAccountKey);
-            }
-            catch(Exception e)
-            {
-                return (ActionResult)new BadRequestObjectResult("Failed to initialize the Azure interface. " + e.Message);
-            }
-
             // Get the values from the request
             string ip = req.Query["IP"];
-            if(ip == null)
-                return (ActionResult)new BadRequestObjectResult("Failed to get the host IP from the request.");
 
-            // Remove the host
-            try
+            // Create the resources
+            Azure az = new Azure(storageAccountName, storageAccountKey);
+
+            // Check if the host exists
+            if(!az.ExistsHost(ip))
+                return (ActionResult)new BadRequestObjectResult("The supplied host does not exist.");
+
+            // Read the RBLs from the configuration
+            List<RBL> MyRBLs = az.GetRBLs();
+
+            // Process each host
+            log.LogInformation($"Processing host: {ip}");
+
+            // The results
+            List<RBLResult> results = new List<RBLResult>();
+
+            foreach (RBL l in MyRBLs)
             {
-                az.RemoveHost(ip);
+                RBLResult r = l.Query(ip);
+                results.Add(r);
+
+                if (r.IsListed)
+                    log.LogInformation($"\tHost {r.Host} is listed on {r.RBL}");
+                else
+                    log.LogInformation($"\tHost {r.Host} is NOT listed on {r.RBL}");
             }
-            catch(Exception e)
-            {
-                return (ActionResult)new BadRequestObjectResult("Failed remove the host. " + e.Message);
-            }
+
+            // Log the end
+            log.LogInformation($"C# Timer trigger function completed at: {DateTime.Now}");
 
             // Return the result
-            return (ActionResult)new OkObjectResult($"The host {ip} has been removed");
+            var jsonToReturn = JsonConvert.SerializeObject(results);
+            return (ActionResult)new OkObjectResult(jsonToReturn);
         }
     }
 }

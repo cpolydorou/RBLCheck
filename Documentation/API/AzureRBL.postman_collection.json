@@ -42,6 +42,77 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Add a new host - Missing Parameter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:7071/api/AddHost/?Hostname=myHost",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"api",
+								"AddHost",
+								""
+							],
+							"query": [
+								{
+									"key": "Hostname",
+									"value": "myHost"
+								},
+								{
+									"key": "IP",
+									"value": "10.0.0.12",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a new host - Malformed IP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:7071/api/AddHost/?Hostname=myHost&IP=10.0.0.12a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"api",
+								"AddHost",
+								""
+							],
+							"query": [
+								{
+									"key": "Hostname",
+									"value": "myHost"
+								},
+								{
+									"key": "IP",
+									"value": "10.0.0.12a"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -73,6 +144,104 @@
 								{
 									"key": "IP",
 									"value": "10.0.0.12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a host - Missing Host",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:7071/api/RemoveHost/?IP=10.0.0.12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"api",
+								"RemoveHost",
+								""
+							],
+							"query": [
+								{
+									"key": "IP",
+									"value": "10.0.0.12"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CheckHost",
+			"item": [
+				{
+					"name": "Check a host",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:7071/api/CheckHost/?IP=10.0.0.12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"api",
+								"CheckHost",
+								""
+							],
+							"query": [
+								{
+									"key": "IP",
+									"value": "10.0.0.12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check a host - Host not exist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:7071/api/CheckHost/?IP=10.0.0.121",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7071",
+							"path": [
+								"api",
+								"CheckHost",
+								""
+							],
+							"query": [
+								{
+									"key": "IP",
+									"value": "10.0.0.121"
 								}
 							]
 						}

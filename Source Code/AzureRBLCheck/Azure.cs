@@ -6,25 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace AzureRBLCheck
 {
     class Azure
     {
-
+        // The Azure objects
         CloudStorageAccount storageAccount;
         CloudTableClient tableClient;
-        //        = new CloudStorageAccount(
-        //    new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(
-        //        "cpolydorouazurerbl", "ICJj4Hc350b2OKPrdMRIcErOt/bfgzn3jGeIoJJCSPbwfdFoNuCdVfuvBK/RHBtVpll3U4hU99dbev+gsbG71w=="), true);
-
-
-        // Create the table client.
-
-        // Get a reference to a table named "peopleTable"
         CloudTable HostTable;
         CloudTable RBLTable;
-
 
         public Azure(string Name, string Key)
         {
@@ -32,12 +24,10 @@ namespace AzureRBLCheck
             this.storageAccount = new CloudStorageAccount(
                 new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(Name, Key), true);
 
-            // 
+            // Create the table clients
             tableClient = storageAccount.CreateCloudTableClient();
-
             HostTable = tableClient.GetTableReference("Hosts");
             RBLTable = tableClient.GetTableReference("RBLs");
-
         }
 
         public List<string> GetHosts()
@@ -63,6 +53,34 @@ namespace AzureRBLCheck
             return hostList;
         }
 
+        public bool ExistsHost(string IP)
+        {
+            // Check the IP string
+            Regex ipRegex = new Regex(@"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b");
+            if (!ipRegex.IsMatch(IP))
+                throw new Exception("The supplied IP is not valid.");
+
+            // Construct the query operation for all customer entities where PartitionKey="Smith".
+            TableQuery<HostEntity> query = new TableQuery<HostEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, ""));
+
+            // Print the fields for each customer.
+            TableContinuationToken token = null;
+            do
+            {
+                TableQuerySegment<HostEntity> resultSegment = HostTable.ExecuteQuerySegmentedAsync(query, token).Result;
+                token = resultSegment.ContinuationToken;
+
+                foreach (HostEntity he in resultSegment.Results)
+                {
+                    if (he.PartitionKey.Equals(IP))
+                        return true;
+                }
+            } while (token != null);
+
+            // Return the result
+            return false;
+        }
+
         public void AddHost(string Hostname, string IPAddress)
         {
             // Create a host entity
@@ -73,13 +91,20 @@ namespace AzureRBLCheck
             // Create the TableOperation object that inserts the host entity.
             TableOperation insertOperation = TableOperation.Insert(host);
 
+            // Check if the host is already added.
+            if (ExistsHost(IPAddress))
+                throw new Exception("Host already exists.");
+
             // Execute the insert operation.
-            //HostTable.Execute(insertOperation);
             var result = HostTable.ExecuteAsync(insertOperation).Result;
         }
 
         public void RemoveHost(string IPAddress)
         {
+            // Check if the host exists
+            if (!ExistsHost(IPAddress))
+                throw new Exception("Host does not exist.");
+
             // Create the table query.
             TableQuery<HostEntity> rangeQuery = new TableQuery<HostEntity>().Where(
                 TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, IPAddress));
