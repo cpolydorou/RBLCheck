@@ -30,6 +30,7 @@ namespace AzureRBLCheck
             RBLTable = tableClient.GetTableReference("RBLs");
         }
 
+        /*
         public List<string> GetHosts()
         {
             List<string> hostList = new List<string>();
@@ -52,6 +53,33 @@ namespace AzureRBLCheck
 
             return hostList;
         }
+        */
+
+        public List<Host> GetHosts()
+        {
+            // The results
+            List<Host> result = new List<Host>();
+
+            // Construct the query operation for all customer entities where PartitionKey="Smith".
+            TableQuery<HostEntity> query = new TableQuery<HostEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, ""));
+
+            // Print the fields for each customer.
+            TableContinuationToken token = null;
+            do
+            {
+                TableQuerySegment<HostEntity> resultSegment = HostTable.ExecuteQuerySegmentedAsync(query, token).Result;
+                token = resultSegment.ContinuationToken;
+
+                foreach (HostEntity he in resultSegment.Results)
+                {
+                    Host s = new Host(he.RowKey, he.PartitionKey);
+                    result.Add(s);
+                }
+            } while (token != null);
+
+            // Return the result
+            return result;
+        }
 
         public bool ExistsHost(string IP)
         {
@@ -61,7 +89,7 @@ namespace AzureRBLCheck
                 throw new Exception("The supplied IP is not valid.");
 
             // Construct the query operation for all customer entities where PartitionKey="Smith".
-            TableQuery<HostEntity> query = new TableQuery<HostEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, ""));
+            TableQuery<HostEntity> query = new TableQuery<HostEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, IP));
 
             // Print the fields for each customer.
             TableContinuationToken token = null;

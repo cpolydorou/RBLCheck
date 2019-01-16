@@ -1,16 +1,23 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace AzureRBLCheck
 {
-    public static class RBLCheck
+    public static class GetHosts
     {
-        [FunctionName("RBLCheck")]
-        public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log, ExecutionContext context)
+        [FunctionName("GetHosts")]
+        public static async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            ILogger log, ExecutionContext context)
         {
             // Log the start
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
@@ -29,30 +36,15 @@ namespace AzureRBLCheck
             // Create the resources
             Azure az = new Azure(storageAccountName, storageAccountKey);
 
-            // Read the RBLs from the configuration
-            List<RBL> MyRBLs = az.GetRBLs();
-
-            // Read the hosts from the configuration
-            List<Host> MyHosts = az.GetHosts();
-
-            // Process each host
-            foreach (Host host in MyHosts)
-            {
-                log.LogInformation($"Processing host: {host.Name}");
-
-                foreach (RBL l in MyRBLs)
-                {
-                    RBLResult r = l.Query(host.IP);
-
-                    if (r.IsListed)
-                        log.LogInformation($"\tHost {r.Host} is listed on {r.RBL}");
-                    else
-                        log.LogInformation($"\tHost {r.Host} is NOT listed on {r.RBL}");
-                }
-            }
+            // Get the hosts
+            List<Host> hosts = az.GetHosts();
 
             // Log the end
             log.LogInformation($"C# Timer trigger function completed at: {DateTime.Now}");
+
+            // Return the result
+            var jsonToReturn = JsonConvert.SerializeObject(hosts);
+            return (ActionResult)new OkObjectResult(jsonToReturn);
         }
     }
 }
