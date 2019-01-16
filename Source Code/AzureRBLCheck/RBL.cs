@@ -15,6 +15,21 @@ namespace AzureRBLCheck
         #endregion
 
         #region Methods
+
+        #region Constructors
+        public RBL(string Name, string FQDN)
+        {
+            this.Name = Name;
+            this.fqdn = FQDN;
+        }
+        #endregion
+
+        #region RBL related
+        /// <summary>
+        /// Query a RBL
+        /// </summary>
+        /// <param name="IP"></param>
+        /// <returns></returns>
         public RBLResult Query(string IP)
         {
             // Create the result object
@@ -53,6 +68,7 @@ namespace AzureRBLCheck
             // Return the result
             return result;
         }
+        #endregion
         #endregion
     }
 }

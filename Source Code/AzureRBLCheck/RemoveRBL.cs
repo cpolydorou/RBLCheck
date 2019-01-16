@@ -8,13 +8,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System.Text.RegularExpressions;
 
 namespace AzureRBLCheck
 {
-    public static class AddHost
+    public static class RemoveRBL
     {
-        [FunctionName("AddHost")]
+        [FunctionName("RemoveRBL")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
@@ -45,36 +44,30 @@ namespace AzureRBLCheck
             {
                 az = new Azure(storageAccountName, storageAccountKey);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return (ActionResult)new BadRequestObjectResult("Failed to initialize the Azure interface. " + e.Message);
             }
 
             // Get the values from the request
-            string hostname = req.Query["Hostname"];
-            string ip = req.Query["IP"];
+            string fqdn = req.Query["FQDN"];
 
             // Validate the input
-            if (hostname == null)
-                return (ActionResult)new BadRequestObjectResult("Failed to add the host. The supplied hostname is not valid.");
-            if (ip == null)
-                return (ActionResult)new BadRequestObjectResult("Failed to add the host. The supplied IP is not valid.");
-            Regex ipRegex = new Regex(@"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b");
-            if(!ipRegex.IsMatch(ip))
-                return (ActionResult)new BadRequestObjectResult("Failed to add the host. The supplied IP is not valid.");
+            if (fqdn == null)
+                return (ActionResult)new BadRequestObjectResult("The RBL FQDN cannot be null.");
 
-            // Add the host
+            // Remove the host
             try
             {
-                az.AddHost(hostname, ip);
+                az.RemoveRBL(fqdn);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                return (ActionResult)new BadRequestObjectResult("Failed to add the host. " + e.Message);
+                return (ActionResult)new BadRequestObjectResult("Failed remove the RBL. " + e.Message);
             }
 
-            // Return a success result
-            return new OkObjectResult($"The host {hostname} - {ip} has been added.");
+            // Return the result
+            return (ActionResult)new OkObjectResult($"The RBL {fqdn} has been removed");
         }
     }
 }

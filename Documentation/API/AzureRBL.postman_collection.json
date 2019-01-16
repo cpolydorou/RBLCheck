@@ -6,247 +6,487 @@
 	},
 	"item": [
 		{
-			"name": "AddHost",
+			"name": "Host",
 			"item": [
 				{
-					"name": "Add a new host",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:7071/api/AddHost/?Hostname=myHost&IP=10.0.0.12",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "7071",
-							"path": [
-								"api",
-								"AddHost",
-								""
-							],
-							"query": [
-								{
-									"key": "Hostname",
-									"value": "myHost"
+					"name": "AddHost",
+					"item": [
+						{
+							"name": "Add a new host",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
 								},
-								{
-									"key": "IP",
-									"value": "10.0.0.12"
+								"url": {
+									"raw": "http://localhost:7071/api/AddHost/?Hostname=myHost&IP=10.0.0.12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"AddHost",
+										""
+									],
+									"query": [
+										{
+											"key": "Hostname",
+											"value": "myHost"
+										},
+										{
+											"key": "IP",
+											"value": "10.0.0.12"
+										}
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new host - Missing Parameter",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/AddHost/?Hostname=myHost",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"AddHost",
+										""
+									],
+									"query": [
+										{
+											"key": "Hostname",
+											"value": "myHost"
+										},
+										{
+											"key": "IP",
+											"value": "10.0.0.12",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new host - Malformed IP",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/AddHost/?Hostname=myHost&IP=10.0.0.12a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"AddHost",
+										""
+									],
+									"query": [
+										{
+											"key": "Hostname",
+											"value": "myHost"
+										},
+										{
+											"key": "IP",
+											"value": "10.0.0.12a"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Add a new host - Missing Parameter",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:7071/api/AddHost/?Hostname=myHost",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "7071",
-							"path": [
-								"api",
-								"AddHost",
-								""
-							],
-							"query": [
-								{
-									"key": "Hostname",
-									"value": "myHost"
+					"name": "RemoveHost",
+					"item": [
+						{
+							"name": "Remove a host",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
 								},
-								{
-									"key": "IP",
-									"value": "10.0.0.12",
-									"disabled": true
+								"url": {
+									"raw": "http://localhost:7071/api/RemoveHost/?IP=10.0.0.12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"RemoveHost",
+										""
+									],
+									"query": [
+										{
+											"key": "IP",
+											"value": "10.0.0.12"
+										}
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "Remove a host - Missing Host",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/RemoveHost/?IP=10.0.0.12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"RemoveHost",
+										""
+									],
+									"query": [
+										{
+											"key": "IP",
+											"value": "10.0.0.12"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Add a new host - Malformed IP",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:7071/api/AddHost/?Hostname=myHost&IP=10.0.0.12a",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "7071",
-							"path": [
-								"api",
-								"AddHost",
-								""
-							],
-							"query": [
-								{
-									"key": "Hostname",
-									"value": "myHost"
+					"name": "GetHosts",
+					"item": [
+						{
+							"name": "Get all hosts",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
 								},
-								{
-									"key": "IP",
-									"value": "10.0.0.12a"
+								"url": {
+									"raw": "http://localhost:7071/api/GetHosts/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"GetHosts",
+										""
+									]
 								}
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CheckHost",
+					"item": [
+						{
+							"name": "Check a host",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/CheckHost/?IP=10.0.0.12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"CheckHost",
+										""
+									],
+									"query": [
+										{
+											"key": "IP",
+											"value": "10.0.0.12"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check a host - Host not exist",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/CheckHost/?IP=10.0.0.121",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"CheckHost",
+										""
+									],
+									"query": [
+										{
+											"key": "IP",
+											"value": "10.0.0.121"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		},
 		{
-			"name": "RemoveHost",
+			"name": "RBL",
 			"item": [
 				{
-					"name": "Remove a host",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:7071/api/RemoveHost/?IP=10.0.0.12",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "7071",
-							"path": [
-								"api",
-								"RemoveHost",
-								""
-							],
-							"query": [
-								{
-									"key": "IP",
-									"value": "10.0.0.12"
+					"name": "GetRBLs",
+					"item": [
+						{
+							"name": "Get all rbls",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/GetRBLs/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"GetRBLs",
+										""
+									]
 								}
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Remove a host - Missing Host",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:7071/api/RemoveHost/?IP=10.0.0.12",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "7071",
-							"path": [
-								"api",
-								"RemoveHost",
-								""
-							],
-							"query": [
-								{
-									"key": "IP",
-									"value": "10.0.0.12"
+					"name": "AddRBL",
+					"item": [
+						{
+							"name": "Add a new RBL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/AddRBL/?Name=MyRBL&FQDN=bl.cpolydorou.net",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"AddRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "MyRBL"
+										},
+										{
+											"key": "FQDN",
+											"value": "bl.cpolydorou.net"
+										}
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "CheckHost",
-			"item": [
-				{
-					"name": "Check a host",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:7071/api/CheckHost/?IP=10.0.0.12",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "7071",
-							"path": [
-								"api",
-								"CheckHost",
-								""
-							],
-							"query": [
-								{
-									"key": "IP",
-									"value": "10.0.0.12"
+						{
+							"name": "Add a new RBL - Missing parameter",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/AddRBL/?Name=MyRBL",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"AddRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "MyRBL"
+										}
+									]
 								}
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Check a host - Host not exist",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:7071/api/CheckHost/?IP=10.0.0.121",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "7071",
-							"path": [
-								"api",
-								"CheckHost",
-								""
-							],
-							"query": [
-								{
-									"key": "IP",
-									"value": "10.0.0.121"
+					"name": "RemoveRBL",
+					"item": [
+						{
+							"name": "Remove a RBL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/RemoveRBL/?FQDN=bl.cpolydorou.net",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"RemoveRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "FQDN",
+											"value": "bl.cpolydorou.net"
+										}
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "Remove a RBL - Missing RBL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/RemoveRBL/?FQDN=norbl.cpolydorou.net",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"RemoveRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "FQDN",
+											"value": "norbl.cpolydorou.net"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove a RBL - Missing Parameter",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/RemoveRBL/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"RemoveRBL",
+										""
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		}
