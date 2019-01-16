@@ -36,6 +36,10 @@ namespace AzureRBLCheck
             // Get the values from the request
             string ip = req.Query["IP"];
 
+            // Validate the input
+            if (ip == null)
+                return (ActionResult)new BadRequestObjectResult("Failed to get host. IP cannot be null.");
+
             // Create the resources
             Azure az = new Azure(storageAccountName, storageAccountKey);
 

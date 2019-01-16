@@ -10,7 +10,7 @@ namespace AzureRBLCheck
     public static class RBLCheck
     {
         [FunctionName("RBLCheck")]
-        public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log, ExecutionContext context)
+        public static void Run([TimerTrigger("0 */30 * * * *")]TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
             // Log the start
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");

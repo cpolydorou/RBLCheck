@@ -11,7 +11,7 @@ namespace AzureRBLCheck
     {
         #region Properties
         public string Name { get; set; }
-        public string fqdn { get; set; }
+        public string FQDN { get; set; }
         #endregion
 
         #region Methods
@@ -20,7 +20,7 @@ namespace AzureRBLCheck
         public RBL(string Name, string FQDN)
         {
             this.Name = Name;
-            this.fqdn = FQDN;
+            this.FQDN = FQDN;
         }
         #endregion
 
@@ -37,7 +37,7 @@ namespace AzureRBLCheck
 
             // Create the record to query
             string[] parts = IP.Split('.');
-            string record = parts[3] + '.' + parts[2] + '.' + parts[1] + '.' + parts[0] + '.' + fqdn;
+            string record = parts[3] + '.' + parts[2] + '.' + parts[1] + '.' + parts[0] + '.' + FQDN;
             
             // Query the list
             try
