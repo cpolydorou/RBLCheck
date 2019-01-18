@@ -15,6 +15,11 @@ namespace AzureRBLCheck
             // Log the start
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
+            // Temporarily disable the task
+            log.LogInformation($"This task has been temporarily disabled");
+            return;
+
+
             // Initialize the configuration object
             var config = new ConfigurationBuilder()
                              .SetBasePath(context.FunctionAppDirectory)
