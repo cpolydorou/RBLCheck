@@ -17,14 +17,18 @@ function Get-AzureRBLList
         {
             throw "Failed to read the configuration."
         }
+
+		# Configure TLS
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     }
 
     Process
     {
         Write-Verbose "Getting Azure RBL Lists."
+        $POSTParameters = @{Code = $config.APIKey}
 		try
 		{
-			$responce = Invoke-RestMethod -Uri ($config.APIBaseUri + "GetRBLs") -Method GET -UseBasicParsing -ErrorAction Stop -Verbose:$false        
+			$responce = Invoke-RestMethod -Uri ($config.APIBaseUri + "GetRBLs") -Method GET -UseBasicParsing -Body $POSTParameters -ErrorAction Stop -Verbose:$false        
 			$responce
 		}
 		catch
@@ -75,11 +79,14 @@ function Add-AzureRBLList
         {
             throw "Failed to read the configuration."
         }
+
+		# Configure TLS
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     }
 
     Process
     {
-        $POSTParameters = @{Name = $Name; FQDN = $FQDN}
+        $POSTParameters = @{Name = $Name; FQDN = $FQDN; Code = $config.APIKey}
 
         Write-Verbose "Adding the list $Name with FQDN $FQDN to the Azure RBL lists."
 		try
@@ -129,13 +136,16 @@ function Remove-AzureRBLList
         {
             throw "Failed to read the configuration."
         }
+
+		# Configure TLS
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     }
 
     Process
     {
         if ($pscmdlet.ShouldProcess($FQDN, "Remove-AzureRBLList"))
         {
-			$POSTParameters = @{FQDN = $FQDN}
+			$POSTParameters = @{FQDN = $FQDN; Code = $config.APIKey}
 
             Write-Verbose "Removing the list $FQDN from the Azure RBL lists."
 			try
@@ -173,14 +183,18 @@ function Get-AzureRBLHost
         {
             throw "Failed to read the configuration."
         }
+
+		# Configure TLS
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     }
 
     Process
     {
         Write-Verbose "Getting the Azure RBL hosts."
+        $POSTParameters = @{Code = $config.APIKey}
 		try
 		{
-			$responce = Invoke-RestMethod -Uri ($config.APIBaseUri + "GetHosts") -Method GET -UseBasicParsing -ErrorAction Stop -Verbose:$false       
+			$responce = Invoke-RestMethod -Uri ($config.APIBaseUri + "GetHosts") -Method GET -UseBasicParsing -Body $POSTParameters -ErrorAction Stop -Verbose:$false       
 			$responce
 		}
 		catch
@@ -231,13 +245,16 @@ function Add-AzureRBLHost
         {
             throw "Failed to read the configuration."
         }
+
+		# Configure TLS
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     }
 
     Process
     {
         Write-Verbose "Adding the host $Hostname with IP $IP to the list of Azure RBL hosts."
 
-        $POSTParameters = @{Hostname = $Hostname; IP = $IP}
+        $POSTParameters = @{Hostname = $Hostname; IP = $IP; Code = $config.APIKey}
 
 		try
 		{
@@ -286,6 +303,9 @@ function Remove-AzureRBLHost
         {
             throw "Failed to read the configuration."
         }
+
+		# Configure TLS
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     }
 
     Process
@@ -294,7 +314,7 @@ function Remove-AzureRBLHost
         {
             Write-Verbose "Removing the host $IP from the Azure RBL hosts list."
 
-			$POSTParameters = @{IP = $IP}
+			$POSTParameters = @{IP = $IP; Code = $config.APIKey}
 
 			try
 			{
@@ -343,13 +363,16 @@ function Check-AzureRBLHost
         {
             throw "Failed to read the configuration."
         }
+
+		# Configure TLS
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     }
 
     Process
     {
         Write-Verbose "Checking the host $IP against all Azure RBL lists."
 
-        $POSTParameters = @{IP = $IP}
+        $POSTParameters = @{IP = $IP; Code = $config.APIKey}
         
 		try
 		{
