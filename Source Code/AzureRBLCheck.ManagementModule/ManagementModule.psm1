@@ -1,3 +1,4 @@
+#region List functions
 #region Get-AzureRBLList
 function Get-AzureRBLList
 {
@@ -171,7 +172,9 @@ function Remove-AzureRBLList
     }
 }
 #endregion
+#endregion
 
+#region Host functions
 #region Get-AzureRBLHost
 function Get-AzureRBLHost
 {
@@ -318,7 +321,7 @@ function Remove-AzureRBLHost
 
     Process
     {
-        if ($pscmdlet.ShouldProcess($IP, "Remove-Host"))
+        if ($pscmdlet.ShouldProcess($IP, "Remove-AzureRBLHost"))
         {
             Write-Verbose "Removing the host $IP from the Azure RBL hosts list."
 
@@ -401,4 +404,231 @@ function Check-AzureRBLHost
     {
     }
 }
+#endregion
+#endregion
+
+#region Domain functions
+#region Get-AzureRBLDomain
+function Get-AzureRBLDomain
+{
+    [CmdletBinding()]
+
+    Param()
+
+    Begin
+    {
+        # Load the configuration
+        try
+        {
+            $configurationPath = (Get-Module -Name "AzureRBL.ManagementModule").ModuleBase + "\Configuration.json"
+            $config = Get-Content $configurationPath | ConvertFrom-Json
+        }
+        catch
+        {
+            throw "Failed to read the configuration."
+        }
+
+		# Configure TLS
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    }
+
+    Process
+    {
+        Write-Verbose "Getting the Azure RBL domains."
+        $POSTParameters = @{Code = $config.APIKey}
+		try
+		{
+			$responce = Invoke-RestMethod -Uri ($config.APIBaseUri + "GetDomains") -Method GET -UseBasicParsing -Body $POSTParameters -ErrorAction Stop -Verbose:$false       
+			$responce
+		}
+		catch
+		{
+			Write-Error "Error getting the domains. $($_.Exception.Message)";
+		}
+    }
+    
+    End
+    {
+    }
+}
+#endregion
+
+#region Add-AzureRBLDomain
+function Add-AzureRBLDomain
+{
+    [CmdletBinding()]
+
+    Param
+    (
+        [Parameter(Mandatory=$true,
+				   ValueFromPipeline = $true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [ValidateNotNullOrEmpty()]
+		[string]
+        $Name
+    )
+
+    Begin
+    {
+        # Load the configuration
+        try
+        {
+            $configurationPath = (Get-Module -Name "AzureRBL.ManagementModule").ModuleBase + "\Configuration.json"
+            $config = Get-Content $configurationPath | ConvertFrom-Json
+        }
+        catch
+        {
+            throw "Failed to read the configuration."
+        }
+
+		# Configure TLS
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    }
+
+    Process
+    {
+        Write-Verbose "Adding the domain $Name to the list of Azure RBL domains."
+
+        $POSTParameters = @{Name = $Name; Code = $config.APIKey}
+
+		try
+		{
+	        $responce = Invoke-RestMethod -Uri ($config.APIBaseUri + "AddDomain") -Method GET -UseBasicParsing -Body $POSTParameters -ErrorAction Stop -Verbose:$false
+		}
+		catch
+		{
+			Write-Error "Error adding domain. $($_.Exception.Message)"
+		}
+    }
+
+    End
+    {
+    }
+}
+#endregion
+
+#region Remove-AzureRBLDomain
+function Remove-AzureRBLDomain
+{
+    [CmdletBinding(SupportsShouldProcess=$true, 
+                   PositionalBinding=$false,
+                   ConfirmImpact='Medium')]
+    
+	Param
+    (
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false, 
+                   Position=0)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Name
+    )
+
+    Begin
+    {
+        # Load the configuration
+        try
+        {
+            $configurationPath = (Get-Module -Name "AzureRBL.ManagementModule").ModuleBase + "\Configuration.json"
+            $config = Get-Content $configurationPath | ConvertFrom-Json
+        }
+        catch
+        {
+            throw "Failed to read the configuration."
+        }
+
+		# Configure TLS
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    }
+
+    Process
+    {
+        if ($pscmdlet.ShouldProcess($Name, "Remove-AzureRBLDomain"))
+        {
+            Write-Verbose "Removing the domain $Name from the Azure RBL domains list."
+
+			$POSTParameters = @{Name = $Name; Code = $config.APIKey}
+
+			try
+			{
+		        $responce = Invoke-RestMethod -Uri ($config.APIBaseUri + "RemoveDomain") -Method GET -UseBasicParsing -Body $POSTParameters -ErrorAction Stop -Verbose:$false
+			}
+			catch
+			{
+				Write-Error "Error removing domain. $($_.Exception.Message)"
+			}
+        }
+    }
+    End
+    {
+    }
+}
+#endregion
+
+#region Check-AzureRBLDomain
+function Check-AzureRBLDomain
+{
+    [CmdletBinding(SupportsShouldProcess=$true, 
+                   PositionalBinding=$false,
+                   ConfirmImpact='Medium')]
+    
+	Param
+    (
+        [Parameter(Mandatory=$true, 
+                   ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false, 
+                   Position=0)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Name
+    )
+
+    Begin
+    {
+        # Load the configuration
+        try
+        {
+            $configurationPath = (Get-Module -Name "AzureRBL.ManagementModule").ModuleBase + "\Configuration.json"
+            $config = Get-Content $configurationPath | ConvertFrom-Json
+        }
+        catch
+        {
+            throw "Failed to read the configuration."
+        }
+
+		# Configure TLS
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    }
+
+    Process
+    {
+        Write-Verbose "Checking the domain $Name against all Azure RBL lists."
+
+        $POSTParameters = @{Name = $Name; Code = $config.APIKey}
+        
+		try
+		{
+		    $responce = Invoke-RestMethod -Uri ($config.APIBaseUri + "CheckDomain") -Method GET -UseBasicParsing -Body $POSTParameters -ErrorAction Stop -Verbose:$false
+            $responce
+
+            if( @($responce | Where-Object {$_.IsListed -eq $true}).Count -gt 0)
+            {
+                Write-Warning "Domain $Name is listed at least on one RBL"
+            }
+        }
+		catch
+		{
+		    Write-Error "Error checking domain. $($_.Exception.Message)"
+	    }
+    }
+    End
+    {
+    }
+}
+#endregion
+
 #endregion
