@@ -61,10 +61,18 @@ function Add-AzureRBLList
         [Parameter(Mandatory=$true,
 				   ValueFromPipeline = $true,
                    ValueFromPipelineByPropertyName=$true,
-                   Position=0)]
+                   Position=1)]
         [ValidateNotNullOrEmpty()]
 		[string]
-		$FQDN
+		$FQDN,
+
+        [Parameter(Mandatory=$true,
+				   ValueFromPipeline = $true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=2)]
+        [ValidateSet("IP", "Domain")]
+		[string]
+		$Type
     )
 
     Begin
@@ -86,7 +94,7 @@ function Add-AzureRBLList
 
     Process
     {
-        $POSTParameters = @{Name = $Name; FQDN = $FQDN; Code = $config.APIKey}
+        $POSTParameters = @{Name = $Name; FQDN = $FQDN; Type = $Type; Code = $config.APIKey}
 
         Write-Verbose "Adding the list $Name with FQDN $FQDN to the Azure RBL lists."
 		try

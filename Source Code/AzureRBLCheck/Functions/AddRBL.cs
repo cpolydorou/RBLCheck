@@ -52,17 +52,23 @@ namespace AzureRBLCheck
             // Get the values from the request
             string name = req.Query["Name"];
             string fqdn = req.Query["FQDN"];
+            string type = req.Query["Type"];
 
             // Validate input
             if(name == null)
                 return (ActionResult)new BadRequestObjectResult("Failed to add the RBL. Name cannot be null.");
             if (fqdn == null)
                 return (ActionResult)new BadRequestObjectResult("Failed to add the RBL. FQDN cannot be null.");
-
+            if(type == null)
+                return (ActionResult)new BadRequestObjectResult("Failed to add the RBL. Invalid type.");
+            if( !(type.ToUpper().Equals("IP") || type.ToUpper().Equals("DOMAIN")))
+            {
+                return (ActionResult)new BadRequestObjectResult("Failed to add the RBL. Invalid type. Allowed types are IP and DOMAIN");
+            }
             // Add the RBL
             try
             {
-                az.AddRBL(name, fqdn);
+                az.AddRBL(name, fqdn, type);
             }
             catch (Exception e)
             {

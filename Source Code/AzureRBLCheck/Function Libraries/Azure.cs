@@ -176,7 +176,7 @@ namespace AzureRBLCheck
 
                 foreach (RBLEntity re in resultSegment.Results)
                 {
-                    RBL r = new RBL(re.PartitionKey, re.RowKey.ToLower());
+                    RBL r = new RBL(re.PartitionKey, re.RowKey.ToLower(), re.Type);
                     result.Add(r);
                 }
             } while (token != null);
@@ -217,12 +217,14 @@ namespace AzureRBLCheck
         /// </summary>
         /// <param name="Name"></param>
         /// <param name="FQDN"></param>
-        public void AddRBL(string Name, string FQDN)
+        /// <param name="Type"></param>
+        public void AddRBL(string Name, string FQDN, string Type)
         {
             // Create a RBL entity
             RBLEntity rbl = new RBLEntity();
             rbl.PartitionKey = Name;
             rbl.RowKey = FQDN.ToLower();
+            rbl.Type = Type.ToUpper();
 
             // Create the TableOperation object that inserts the host entity.
             TableOperation insertOperation = TableOperation.Insert(rbl);
@@ -385,6 +387,7 @@ namespace AzureRBLCheck
 
     public class RBLEntity : TableEntity
     {
+        public string Type { get; set; }
     }
 
     public class DomainEntity : TableEntity

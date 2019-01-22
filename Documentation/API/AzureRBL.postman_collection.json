@@ -327,16 +327,23 @@
 					"name": "AddRBL",
 					"item": [
 						{
-							"name": "Add a new RBL",
+							"name": "Add a new RBL - Type IP",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
 								"body": {
-									"mode": "raw",
-									"raw": ""
+									"mode": "file",
+									"file": {}
 								},
 								"url": {
-									"raw": "http://localhost:7071/api/AddRBL/?Name=MyRBL&FQDN=bl.cpolydorou.net",
+									"raw": "http://localhost:7071/api/AddRBL/?Name=MyRBL&FQDN=bl.cpolydorou.net&Type=IP",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -355,6 +362,102 @@
 										{
 											"key": "FQDN",
 											"value": "bl.cpolydorou.net"
+										},
+										{
+											"key": "Type",
+											"value": "IP"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new RBL - Type Domain",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "file",
+									"file": {}
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/AddRBL/?Name=MyRBL&FQDN=bldomain.cpolydorou.net&Type=Domain",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"AddRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "MyRBL"
+										},
+										{
+											"key": "FQDN",
+											"value": "bldomain.cpolydorou.net"
+										},
+										{
+											"key": "Type",
+											"value": "Domain"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new RBL - Invalid Type",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "file",
+									"file": {}
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/AddRBL/?Name=MyRBL&FQDN=bldomain.cpolydorou.net&Type=InvalidType",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"AddRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "MyRBL"
+										},
+										{
+											"key": "FQDN",
+											"value": "bldomain.cpolydorou.net"
+										},
+										{
+											"key": "Type",
+											"value": "InvalidType"
 										}
 									]
 								}
@@ -487,6 +590,131 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Domain",
+			"item": [
+				{
+					"name": "AddDomain",
+					"item": [
+						{
+							"name": "Add a new domain",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/AddDomain/?Name=domain.com",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"AddDomain",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "domain.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "GetDomains",
+					"item": [
+						{
+							"name": "Get all domains",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/GetHosts/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"GetHosts",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "RemoveDomain",
+					"item": [
+						{
+							"name": "Remove a domain",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/RemoveDomain/?Name=domain.com",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"RemoveDomain",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "domain.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "GetDomains",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
 				}
 			]
 		}

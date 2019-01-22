@@ -12,15 +12,17 @@ namespace AzureRBLCheck
         #region Properties
         public string Name { get; set; }
         public string FQDN { get; set; }
+        public string Type { get; set; }
         #endregion
 
         #region Methods
 
         #region Constructors
-        public RBL(string Name, string FQDN)
+        public RBL(string Name, string FQDN, string Type)
         {
             this.Name = Name;
             this.FQDN = FQDN;
+            this.Type = Type;
         }
         #endregion
 

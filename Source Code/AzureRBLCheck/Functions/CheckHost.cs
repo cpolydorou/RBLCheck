@@ -54,7 +54,7 @@ namespace AzureRBLCheck
                 return (ActionResult)new BadRequestObjectResult("The supplied host does not exist.");
 
             // Read the RBLs from the configuration
-            List<RBL> MyRBLs = az.GetRBLs();
+            List<RBL> MyRBLs = az.GetRBLs().Where(x => x.Type.ToUpper().Equals("IP")).ToList();
 
             // Process each host
             log.LogInformation($"Processing host: {ip}");
