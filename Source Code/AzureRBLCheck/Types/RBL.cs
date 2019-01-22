@@ -32,7 +32,7 @@ namespace AzureRBLCheck
         /// </summary>
         /// <param name="IP"></param>
         /// <returns></returns>
-        public RBLResult Query(string IP)
+        public RBLResult QueryHost(string IP)
         {
             // Create the result object
             RBLResult result = new RBLResult(this.Name, IP);
