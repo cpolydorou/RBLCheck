@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -8,16 +9,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Threading;
-using System.Collections.Concurrent;
 using System.Linq;
 
-namespace AzureRBLCheck
+namespace AzureRBLCheck.Functions
 {
-    public static class CheckHost
+    public static class CheckDomain
     {
-        [FunctionName("CheckHost")]
+        [FunctionName("CheckDomain")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log, Microsoft.Azure.WebJobs.ExecutionContext context)
@@ -40,37 +38,37 @@ namespace AzureRBLCheck
             int maxThreads = int.Parse(config["Threads"]);
 
             // Get the values from the request
-            string ip = req.Query["IP"];
+            string name = req.Query["Name"];
 
             // Validate the input
-            if (ip == null)
-                return (ActionResult)new BadRequestObjectResult("Failed to get host. IP cannot be null.");
+            if (name == null)
+                return (ActionResult)new BadRequestObjectResult("Failed to get the domain. Name cannot be null.");
 
             // Create the resources
             Azure az = new Azure(storageAccountName, storageAccountKey);
 
-            // Check if the host exists
-            if(!az.ExistsHost(ip))
-                return (ActionResult)new BadRequestObjectResult("The supplied host does not exist.");
+            // Check if the domain exists
+            if (!az.ExistsDomain(name))
+                return (ActionResult)new BadRequestObjectResult("The supplied domain does not exist.");
 
             // Read the RBLs from the configuration
-            List<RBL> MyRBLs = az.GetRBLs().Where(x => x.Type.ToUpper().Equals("IP")).ToList();
+            List<RBL> MyRBLs = az.GetRBLs().Where(x => x.Type.ToUpper().Equals("DOMAIN")).ToList();
 
             // Process each host
-            log.LogInformation($"Processing host: {ip}");
+            log.LogInformation($"Processing domain: {name}");
 
             // The results
-            List<RBLHostResult> results = new List<RBLHostResult>();
+            List<RBLDomainResult> results = new List<RBLDomainResult>();
 
             // Create the tasks
-            List<Task<RBLHostResult>> tasks = new List<Task<RBLHostResult>>();
-            foreach(RBL r in MyRBLs)
+            List<Task<RBLDomainResult>> tasks = new List<Task<RBLDomainResult>>();
+            foreach (RBL r in MyRBLs)
             {
-                tasks.Add(new Task<RBLHostResult>(() => r.QueryHost(ip)));
+                tasks.Add(new Task<RBLDomainResult>(() => r.QueryDomain(name)));
             }
 
             // Start the first batch of tasks
-            for(int i=0; i<maxThreads && i<tasks.Count; i++)
+            for (int i = 0; i < maxThreads && i < tasks.Count; i++)
             {
                 tasks[i].Start();
             }
@@ -91,11 +89,11 @@ namespace AzureRBLCheck
                 catch (Exception exc) { }
 
                 // Start the next task
-                if(tasks.Count > 0)
+                if (tasks.Count > 0)
                 {
-                    foreach(Task<RBLHostResult> nextTask in tasks)
+                    foreach (Task<RBLDomainResult> nextTask in tasks)
                     {
-                        if(nextTask.Status == TaskStatus.Created)
+                        if (nextTask.Status == TaskStatus.Created)
                         {
                             nextTask.Start();
                             break;

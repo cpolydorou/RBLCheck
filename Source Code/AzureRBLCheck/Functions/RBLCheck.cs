@@ -47,7 +47,7 @@ namespace AzureRBLCheck
 
                 foreach (RBL l in MyRBLs)
                 {
-                    RBLResult r = l.QueryHost(host.IP);
+                    RBLHostResult r = l.QueryHost(host.IP);
 
                     if (r.IsListed)
                         log.LogInformation($"\tHost {r.Host} is listed on {r.RBL}");
