@@ -254,7 +254,7 @@
 							"response": []
 						},
 						{
-							"name": "Check a host - Host not exist",
+							"name": "Check a host - Host not exist Copy",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -646,7 +646,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "http://localhost:7071/api/GetHosts/",
+									"raw": "http://localhost:7071/api/GetDomains/",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -654,7 +654,7 @@
 									"port": "7071",
 									"path": [
 										"api",
-										"GetHosts",
+										"GetDomains",
 										""
 									]
 								}
@@ -702,19 +702,72 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "GetDomains",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+					"name": "Check domain",
+					"item": [
+						{
+							"name": "Check a domain",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/CheckHost/?Name=4utf9w0eab.pw",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"CheckHost",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "4utf9w0eab.pw"
+										}
+									]
+								}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": ""
+						{
+							"name": "Check a domain - Missing domain",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7071/api/CheckHost/?Name=nodomain.com",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7071",
+									"path": [
+										"api",
+										"CheckHost",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "nodomain.com"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		}
