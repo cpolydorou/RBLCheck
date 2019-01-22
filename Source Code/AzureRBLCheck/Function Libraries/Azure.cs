@@ -18,6 +18,7 @@ namespace AzureRBLCheck
         CloudTableClient tableClient;
         CloudTable HostTable;
         CloudTable RBLTable;
+        CloudTable DomainTable;
         #endregion
 
         #region Methods
@@ -32,6 +33,7 @@ namespace AzureRBLCheck
             tableClient = storageAccount.CreateCloudTableClient();
             HostTable = tableClient.GetTableReference("Hosts");
             RBLTable = tableClient.GetTableReference("RBLs");
+            DomainTable = tableClient.GetTableReference("Domains");
         }
         #endregion
 
@@ -262,6 +264,117 @@ namespace AzureRBLCheck
             } while (token != null);
         }
         #endregion
+
+        #region Domain related functions
+        /// <summary>
+        /// Get all domains
+        /// </summary>
+        /// <returns></returns>
+        public List<Domain> GetDomains()
+        {
+            // The results
+            List<Domain> result = new List<Domain>();
+
+            // Construct the query operation for all customer entities where PartitionKey="Smith".
+            TableQuery<DomainEntity> query = new TableQuery<DomainEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, ""));
+
+            // Print the fields for each customer.
+            TableContinuationToken token = null;
+            do
+            {
+                TableQuerySegment<DomainEntity> resultSegment = DomainTable.ExecuteQuerySegmentedAsync(query, token).Result;
+                token = resultSegment.ContinuationToken;
+
+                foreach (DomainEntity de in resultSegment.Results)
+                {
+                    Domain d = new Domain(de.PartitionKey);
+                    result.Add(d);
+                }
+            } while (token != null);
+
+            // Return the result
+            return result;
+        }
+
+        /// <summary>
+        /// Check if a domain exists
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+        public bool ExistsDomain(string Name)
+        {
+            // Construct the query operation for all customer entities where PartitionKey="Smith".
+            TableQuery<DomainEntity> query = new TableQuery<DomainEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Name.ToLower()));
+
+            // Print the fields for each customer.
+            TableContinuationToken token = null;
+            do
+            {
+                TableQuerySegment<DomainEntity> resultSegment = DomainTable.ExecuteQuerySegmentedAsync(query, token).Result;
+                token = resultSegment.ContinuationToken;
+
+                foreach (DomainEntity de in resultSegment.Results)
+                {
+                    if (de.PartitionKey.ToLower().Equals(Name.ToLower()))
+                        return true;
+                }
+            } while (token != null);
+
+            // Return the result
+            return false;
+        }
+
+        /// <summary>
+        /// Add a domain
+        /// </summary>
+        /// <param name="Name"></param>
+        public void AddDomain(string Name)
+        {
+            // Create a domain entity
+            DomainEntity domain = new DomainEntity();
+            domain.PartitionKey = Name.ToLower();
+            domain.RowKey = Name.ToLower();
+
+            // Create the TableOperation object that inserts the domain entity.
+            TableOperation insertOperation = TableOperation.Insert(domain);
+
+            // Check if the domain is already added.
+            if (ExistsDomain(Name))
+                throw new Exception("Domain already exists.");
+
+            // Execute the insert operation.
+            var result = DomainTable.ExecuteAsync(insertOperation).Result;
+        }
+
+        /// <summary>
+        /// Remove a domain
+        /// </summary>
+        /// <param name="Name"></param>
+        public void RemoveDomain(string Name)
+        {
+            // Check if the domain exists
+            if (!ExistsDomain(Name))
+                throw new Exception("Domain does not exist.");
+
+            // Create the table query.
+            TableQuery<DomainEntity> rangeQuery = new TableQuery<DomainEntity>().Where(
+                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Name.ToLower()));
+
+            // Print the fields for each customer.
+            TableContinuationToken token = null;
+            do
+            {
+                TableQuerySegment<DomainEntity> resultSegment = DomainTable.ExecuteQuerySegmentedAsync(rangeQuery, token).Result;
+                token = resultSegment.ContinuationToken;
+
+                foreach (DomainEntity entity in resultSegment.Results)
+                {
+                    TableOperation removeOperation = TableOperation.Delete(entity);
+                    DomainTable.ExecuteAsync(removeOperation);
+                }
+            } while (token != null);
+        }
+        #endregion#endregion
         #endregion
     }
 
@@ -271,6 +384,10 @@ namespace AzureRBLCheck
     }
 
     public class RBLEntity : TableEntity
+    {
+    }
+
+    public class DomainEntity : TableEntity
     {
     }
     #endregion
