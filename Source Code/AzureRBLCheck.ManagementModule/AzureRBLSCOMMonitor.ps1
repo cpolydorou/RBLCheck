@@ -8,7 +8,8 @@
     Returns : <0 - Error calling the function
                0 - Host is not listed
               >0 - Error calling the function
-    Version : 1.0 - Jan 22, 2019 - Initial script 
+    Version : 1.1 - Jan 23, 2019 - Added domain check support
+              1.0 - Jan 22, 2019 - Initial script 
 #>
 #endregion
 
@@ -18,17 +19,31 @@
 Param
 (
     [Parameter( Mandatory = $true,
-                Position = 0)]
+                Position = 0,
+                ParameterSetName = "Host")]
     [string]
-    $IP
+    $IP,
+
+    [Parameter( Mandatory = $true,
+                Position = 0,
+                ParameterSetName = "Domain")]
+    [string]
+    $Domain
+
 )
 #endregion
 
 #region Configuration
 
 # The url of the function
-$functionURL = "https://azurerbl.azurewebsites.net/api/CheckHost"
-
+if($IP)
+{
+    $functionURL = "https://azurerbl.azurewebsites.net/api/CheckHost"
+}
+else
+{
+    $functionURL = "https://azurerbl.azurewebsites.net/api/CheckDomain"
+}
 # The key for the function
 $functionKey = "T8gBT0lw/aQ2IxizaweNrJKaAFxUDZtuYsZUCbDpCQwqmgbTiDrrLg=="
 
@@ -43,10 +58,25 @@ $functionKey = "T8gBT0lw/aQ2IxizaweNrJKaAFxUDZtuYsZUCbDpCQwqmgbTiDrrLg=="
 #region Logic
 
 # Create the function parameters
-$POSTParameters = @{IP = $IP; Code = $functionKey}
+if($IP)
+{
+    $POSTParameters = @{IP = $IP; Code = $functionKey}
+}
+else
+{
+    $POSTParameters = @{Name = $Domain; Code = $functionKey}
+}
 
 # Call the function
-Write-Verbose "Calling the Azure Function for host $IP"
+if($IP)
+{
+    Write-Verbose "Calling the Azure Function for host $IP"
+}
+else
+{
+    Write-Verbose "Calling the Azure Function for domain $Domain"
+}
+
 try
 {
     $responce = Invoke-RestMethod -Uri $functionURL -Method GET -UseBasicParsing -Body $POSTParameters -ErrorAction Stop -Verbose:$false        
@@ -54,17 +84,25 @@ try
 catch
 {
     Write-Error "Error getting the RBLs. $($_.Exception.Message)"
-    return 3
+    return -3
 }
 
 # Process the result
 Write-Verbose "Processing the function output."
 foreach($RBLCheck in $responce)
 {
-    # If the server is listed, return 2
+    # If the server or domain is listed, return 2
     if($RBLCheck.IsListed -eq $true)
     {
-        Write-Verbose "The host is listed on $($RBLCheck.RBL)."
+        if($IP)
+        {
+            Write-Verbose "The host is listed on $($RBLCheck.RBL)."
+        }
+        else
+        {
+            Write-Verbose "The domain is listed on $($RBLCheck.RBL)."
+        }
+
         $ListedRBLCount++
     }
 }    
@@ -72,13 +110,27 @@ foreach($RBLCheck in $responce)
 # Return the result
 if($ListedRBLCount -gt 0)
 {
-    # The server is listed
-    Write-Verbose "The host is listed at $ListedRBLCount lists."
+    # The server/domain is listed
+    if($IP)
+    {
+        Write-Verbose "The host is listed at $ListedRBLCount lists."
+    }
+    else
+    {
+        Write-Verbose "The domain is listed at $ListedRBLCount lists."
+    }
 }
 else
 {
-    # The server is not listed, return 1
-    Write-Verbose "The host is not listed."
+    # The server/domain is not listed, return 1
+    if($IP)
+    {
+        Write-Verbose "The host is not listed."
+    }
+    else
+    {
+        Write-Verbose "The domain is not listed."
+    }
 }
 
 return $ListedRBLCount
