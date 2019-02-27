@@ -35,7 +35,15 @@ namespace AzureRBLCheck.Functions
             string storageAccountKey = config["StorageAccountKey"];
 
             // Get the parallelization configuration
-            int maxThreads = int.Parse(config["Threads"]);
+            int maxThreads = 0;
+            try
+            {
+                int.TryParse(config["Threads"], out maxThreads);
+            }
+            catch(Exception e)
+            {
+                maxThreads = 20;
+            }
 
             // Get the values from the request
             string name = req.Query["Name"];
