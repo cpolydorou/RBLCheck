@@ -232,6 +232,7 @@ function Add-AzureRBLHost
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [ValidateNotNullOrEmpty()]
+		[Alias("Name")]
 		[string]
         $Hostname,
 
