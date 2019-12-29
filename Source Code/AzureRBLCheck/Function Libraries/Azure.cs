@@ -1,12 +1,12 @@
-﻿using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Table;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace AzureRBLCheck
 {
@@ -44,13 +44,13 @@ namespace AzureRBLCheck
         /// <returns></returns>
         public List<Host> GetHosts()
         {
-            // The results
+            // A list to save the results
             List<Host> result = new List<Host>();
 
-            // Construct the query operation for all customer entities where PartitionKey="Smith".
+            // Construct the query operation for all host entities.
             TableQuery<HostEntity> query = new TableQuery<HostEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, ""));
 
-            // Print the fields for each customer.
+            // Get each host.
             TableContinuationToken token = null;
             do
             {
@@ -80,10 +80,10 @@ namespace AzureRBLCheck
             if (!ipRegex.IsMatch(IP))
                 throw new Exception("The supplied IP is not valid.");
 
-            // Construct the query operation for all customer entities where PartitionKey="Smith".
+            // Construct the query operation for all host entities where the PartitionKey is equal to the IP.
             TableQuery<HostEntity> query = new TableQuery<HostEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, IP));
 
-            // Print the fields for each customer.
+            // Get the hosts.
             TableContinuationToken token = null;
             do
             {
@@ -138,7 +138,7 @@ namespace AzureRBLCheck
             TableQuery<HostEntity> rangeQuery = new TableQuery<HostEntity>().Where(
                 TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, IPAddress));
 
-            // Print the fields for each customer.
+            // Search for the host and remove it.
             TableContinuationToken token = null;
             do
             {
@@ -161,13 +161,13 @@ namespace AzureRBLCheck
         /// <returns></returns>
         public List<RBL> GetRBLs()
         {
-            // The results
+            // A list to save the results
             List<RBL> result = new List<RBL>();
 
-            // Construct the query operation for all customer entities where PartitionKey="Smith".
+            // Construct the query operation for all RBL entities.
             TableQuery<RBLEntity> query = new TableQuery<RBLEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, ""));
 
-            // Print the fields for each customer.
+            // Get each RBL
             TableContinuationToken token = null;
             do
             {
@@ -192,7 +192,7 @@ namespace AzureRBLCheck
         /// <returns></returns>
         public bool ExistsRBL(string FQDN)
         {
-            // Construct the query operation for all customer entities where PartitionKey="Smith".
+            // Construct the query operation to get the RBL.
             TableQuery<RBLEntity> query = new TableQuery<RBLEntity>().Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, FQDN.ToLower()));
 
             TableContinuationToken token = null;
@@ -243,7 +243,7 @@ namespace AzureRBLCheck
         /// <param name="FQDN"></param>
         public void RemoveRBL(string FQDN)
         {
-            // Check if the host exists
+            // Check if the RBL exists
             if (!ExistsRBL(FQDN))
                 throw new Exception("RBL does not exist.");
 
@@ -251,7 +251,7 @@ namespace AzureRBLCheck
             TableQuery<RBLEntity> rangeQuery = new TableQuery<RBLEntity>().Where(
                 TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, FQDN.ToLower()));
 
-            // Print the fields for each customer.
+            // Search for and remove the RBL.
             TableContinuationToken token = null;
             do
             {
@@ -274,13 +274,13 @@ namespace AzureRBLCheck
         /// <returns></returns>
         public List<Domain> GetDomains()
         {
-            // The results
+            // A list to save the results
             List<Domain> result = new List<Domain>();
 
-            // Construct the query operation for all customer entities where PartitionKey="Smith".
+            // Construct the query operation for all domain entities.
             TableQuery<DomainEntity> query = new TableQuery<DomainEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, ""));
 
-            // Print the fields for each customer.
+            // Get all domains.
             TableContinuationToken token = null;
             do
             {
@@ -305,10 +305,10 @@ namespace AzureRBLCheck
         /// <returns></returns>
         public bool ExistsDomain(string Name)
         {
-            // Construct the query operation for all customer entities where PartitionKey="Smith".
+            // Construct the query operation for all domain entities based on the PartitionKey.
             TableQuery<DomainEntity> query = new TableQuery<DomainEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Name.ToLower()));
 
-            // Print the fields for each customer.
+            // Get the domains.
             TableContinuationToken token = null;
             do
             {
@@ -362,7 +362,7 @@ namespace AzureRBLCheck
             TableQuery<DomainEntity> rangeQuery = new TableQuery<DomainEntity>().Where(
                 TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Name.ToLower()));
 
-            // Print the fields for each customer.
+            // Get the domain.
             TableContinuationToken token = null;
             do
             {
@@ -381,15 +381,24 @@ namespace AzureRBLCheck
     }
 
     #region Table Entities
+    /// <summary>
+    /// Table entity for the Hosts table
+    /// </summary>
     public class HostEntity : TableEntity
     {
     }
 
+    /// <summary>
+    /// Table entity for the RBLs table
+    /// </summary>
     public class RBLEntity : TableEntity
     {
         public string Type { get; set; }
     }
 
+    /// <summary>
+    /// Table entity for the Domains table
+    /// </summary>
     public class DomainEntity : TableEntity
     {
     }
