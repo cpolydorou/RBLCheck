@@ -38,11 +38,11 @@ Param
 # The url of the function
 if($IP)
 {
-    $functionURL = "https://azurerbl.azurewebsites.net/api/CheckHost"
+    $functionURL = "https://devazurerblcheck.azurewebsites.net/api/CheckHost"
 }
 else
 {
-    $functionURL = "https://azurerbl.azurewebsites.net/api/CheckDomain"
+    $functionURL = "https://devazurerblcheck.azurewebsites.net/api/CheckDomain"
 }
 # The key for the function
 $functionKey = "T8gBT0lw/aQ2IxizaweNrJKaAFxUDZtuYsZUCbDpCQwqmgbTiDrrLg=="
