@@ -18,6 +18,10 @@ namespace AzureRBLCheck
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
+
+
+
+
             // Log the start
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
