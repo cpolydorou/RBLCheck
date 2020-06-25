@@ -16,17 +16,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/AddHost/?Hostname=myHost&IP=10.0.0.12",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddHost/?Hostname=myHost&IP=10.0.0.12&=",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"AddHost",
@@ -40,6 +37,10 @@
 										{
 											"key": "IP",
 											"value": "10.0.0.12"
+										},
+										{
+											"key": "",
+											"value": ""
 										}
 									]
 								}
@@ -51,17 +52,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/AddHost/?Hostname=myHost",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddHost/?Hostname=myHost",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"AddHost",
@@ -87,17 +85,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/AddHost/?Hostname=myHost&IP=10.0.0.12a",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddHost/?Hostname=myHost&IP=10.0.0.12a",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"AddHost",
@@ -128,17 +123,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/RemoveHost/?IP=10.0.0.12",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveHost/?IP=10.0.0.12",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"RemoveHost",
@@ -159,17 +151,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/RemoveHost/?IP=10.0.0.12",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveHost/?IP=10.0.0.12",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"RemoveHost",
@@ -196,21 +185,25 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/GetHosts/",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/GetHosts/",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"GetHosts",
 										""
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -227,17 +220,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/CheckHost/?IP=10.0.0.12",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/CheckHost/?IP=54.39.224.173",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"CheckHost",
@@ -246,7 +236,7 @@
 									"query": [
 										{
 											"key": "IP",
-											"value": "10.0.0.12"
+											"value": "54.39.224.173"
 										}
 									]
 								}
@@ -258,17 +248,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/CheckHost/?IP=10.0.0.121",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/CheckHost/?IP=10.0.0.121",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"CheckHost",
@@ -287,7 +274,50 @@
 					],
 					"_postman_isSubFolder": true
 				}
-			]
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "fadflkjv09w3$#%@#$9fasdflj98707686fSDF&*^(FD987sdf",
+						"type": "string"
+					},
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "code",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c97ebcde-32ba-4af4-8e60-ff00361201a2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d8c7e547-4631-48e9-99f0-9202f0446e1d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "RBL",
@@ -300,17 +330,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/GetRBLs/",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/GetRBLs/",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"GetRBLs",
@@ -343,12 +370,13 @@
 									"file": {}
 								},
 								"url": {
-									"raw": "http://localhost:7071/api/AddRBL/?Name=MyRBL&FQDN=bl.cpolydorou.net&Type=IP",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddRBL/?Name=MyRBL&FQDN=bl.cpolydorou.net&Type=IP",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"AddRBL",
@@ -389,12 +417,13 @@
 									"file": {}
 								},
 								"url": {
-									"raw": "http://localhost:7071/api/AddRBL/?Name=MyRBL&FQDN=bldomain.cpolydorou.net&Type=Domain",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddRBL/?Name=MyRBL&FQDN=bldomain.cpolydorou.net&Type=Domain",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"AddRBL",
@@ -435,12 +464,13 @@
 									"file": {}
 								},
 								"url": {
-									"raw": "http://localhost:7071/api/AddRBL/?Name=MyRBL&FQDN=bldomain.cpolydorou.net&Type=InvalidType",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddRBL/?Name=MyRBL&FQDN=bldomain.cpolydorou.net&Type=InvalidType",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"AddRBL",
@@ -469,17 +499,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/AddRBL/?Name=MyRBL",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddRBL/?Name=MyRBL",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"AddRBL",
@@ -506,17 +533,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/RemoveRBL/?FQDN=bl.cpolydorou.net",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveRBL/?FQDN=bl.cpolydorou.net",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"RemoveRBL",
@@ -537,17 +561,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/RemoveRBL/?FQDN=norbl.cpolydorou.net",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveRBL/?FQDN=norbl.cpolydorou.net",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"RemoveRBL",
@@ -568,17 +589,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/RemoveRBL/",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveRBL/",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"RemoveRBL",
@@ -591,7 +609,50 @@
 					],
 					"_postman_isSubFolder": true
 				}
-			]
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "fadflkjv09w3$#%@#$9fasdflj98707686fSDF&*^(FD987sdf",
+						"type": "string"
+					},
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "code",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "208ead6f-4bc7-418f-a680-c28a10069159",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "453aa4a8-6cd6-4e54-9d0c-2c63ef553bb7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Domain",
@@ -604,17 +665,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/AddDomain/?Name=domain.com",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddDomain/?Name=domain.com",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"AddDomain",
@@ -641,17 +699,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/GetDomains/",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/GetDomains/",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"GetDomains",
@@ -672,17 +727,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/RemoveDomain/?Name=domain.com",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveDomain/?Name=domain.com",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"RemoveDomain",
@@ -709,17 +761,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/CheckHost/?Name=4utf9w0eab.pw",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/CheckHost/?Name=4utf9w0eab.pw",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"CheckHost",
@@ -740,17 +789,14 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "http://localhost:7071/api/CheckHost/?Name=nodomain.com",
-									"protocol": "http",
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/CheckHost/?Name=nodomain.com",
+									"protocol": "https",
 									"host": [
-										"localhost"
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
 									],
-									"port": "7071",
 									"path": [
 										"api",
 										"CheckHost",
@@ -769,7 +815,50 @@
 					],
 					"_postman_isSubFolder": true
 				}
-			]
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "fadflkjv09w3$#%@#$9fasdflj98707686fSDF&*^(FD987sdf",
+						"type": "string"
+					},
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "code",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cf6bf9fe-31fb-4ff3-b51a-85fc13683638",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "24bb2228-5614-469a-8f08-fbd9a307b45f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	]
 }
