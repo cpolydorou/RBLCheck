@@ -1,0 +1,864 @@
+{
+	"info": {
+		"_postman_id": "896769fb-4a05-4196-b099-4b07a9b666cf",
+		"name": "AzureRBL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Host",
+			"item": [
+				{
+					"name": "AddHost",
+					"item": [
+						{
+							"name": "Add a new host",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddHost/?Hostname=myHost&IP=10.0.0.12&=",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"AddHost",
+										""
+									],
+									"query": [
+										{
+											"key": "Hostname",
+											"value": "myHost"
+										},
+										{
+											"key": "IP",
+											"value": "10.0.0.12"
+										},
+										{
+											"key": "",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new host - Missing Parameter",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddHost/?Hostname=myHost",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"AddHost",
+										""
+									],
+									"query": [
+										{
+											"key": "Hostname",
+											"value": "myHost"
+										},
+										{
+											"key": "IP",
+											"value": "10.0.0.12",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new host - Malformed IP",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddHost/?Hostname=myHost&IP=10.0.0.12a",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"AddHost",
+										""
+									],
+									"query": [
+										{
+											"key": "Hostname",
+											"value": "myHost"
+										},
+										{
+											"key": "IP",
+											"value": "10.0.0.12a"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "RemoveHost",
+					"item": [
+						{
+							"name": "Remove a host",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveHost/?IP=10.0.0.12",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"RemoveHost",
+										""
+									],
+									"query": [
+										{
+											"key": "IP",
+											"value": "10.0.0.12"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove a host - Missing Host",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveHost/?IP=10.0.0.12",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"RemoveHost",
+										""
+									],
+									"query": [
+										{
+											"key": "IP",
+											"value": "10.0.0.12"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "GetHosts",
+					"item": [
+						{
+							"name": "Get all hosts",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/GetHosts/",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"GetHosts",
+										""
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CheckHost",
+					"item": [
+						{
+							"name": "Check a host",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/CheckHost/?IP=54.39.224.173",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"CheckHost",
+										""
+									],
+									"query": [
+										{
+											"key": "IP",
+											"value": "54.39.224.173"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check a host - Host not exist Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/CheckHost/?IP=10.0.0.121",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"CheckHost",
+										""
+									],
+									"query": [
+										{
+											"key": "IP",
+											"value": "10.0.0.121"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "fadflkjv09w3$#%@#$9fasdflj98707686fSDF&*^(FD987sdf",
+						"type": "string"
+					},
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "code",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c97ebcde-32ba-4af4-8e60-ff00361201a2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d8c7e547-4631-48e9-99f0-9202f0446e1d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "RBL",
+			"item": [
+				{
+					"name": "GetRBLs",
+					"item": [
+						{
+							"name": "Get all rbls",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/GetRBLs/",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"GetRBLs",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "AddRBL",
+					"item": [
+						{
+							"name": "Add a new RBL - Type IP",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "file",
+									"file": {}
+								},
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddRBL/?Name=MyRBL&FQDN=bl.cpolydorou.net&Type=IP",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"AddRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "MyRBL"
+										},
+										{
+											"key": "FQDN",
+											"value": "bl.cpolydorou.net"
+										},
+										{
+											"key": "Type",
+											"value": "IP"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new RBL - Type Domain",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "file",
+									"file": {}
+								},
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddRBL/?Name=MyRBL&FQDN=bldomain.cpolydorou.net&Type=Domain",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"AddRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "MyRBL"
+										},
+										{
+											"key": "FQDN",
+											"value": "bldomain.cpolydorou.net"
+										},
+										{
+											"key": "Type",
+											"value": "Domain"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new RBL - Invalid Type",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "file",
+									"file": {}
+								},
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddRBL/?Name=MyRBL&FQDN=bldomain.cpolydorou.net&Type=InvalidType",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"AddRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "MyRBL"
+										},
+										{
+											"key": "FQDN",
+											"value": "bldomain.cpolydorou.net"
+										},
+										{
+											"key": "Type",
+											"value": "InvalidType"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new RBL - Missing parameter",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddRBL/?Name=MyRBL",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"AddRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "MyRBL"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "RemoveRBL",
+					"item": [
+						{
+							"name": "Remove a RBL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveRBL/?FQDN=bl.cpolydorou.net",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"RemoveRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "FQDN",
+											"value": "bl.cpolydorou.net"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove a RBL - Missing RBL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveRBL/?FQDN=norbl.cpolydorou.net",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"RemoveRBL",
+										""
+									],
+									"query": [
+										{
+											"key": "FQDN",
+											"value": "norbl.cpolydorou.net"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove a RBL - Missing Parameter",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveRBL/",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"RemoveRBL",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "fadflkjv09w3$#%@#$9fasdflj98707686fSDF&*^(FD987sdf",
+						"type": "string"
+					},
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "code",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "208ead6f-4bc7-418f-a680-c28a10069159",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "453aa4a8-6cd6-4e54-9d0c-2c63ef553bb7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Domain",
+			"item": [
+				{
+					"name": "AddDomain",
+					"item": [
+						{
+							"name": "Add a new domain",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/AddDomain/?Name=domain.com",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"AddDomain",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "domain.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "GetDomains",
+					"item": [
+						{
+							"name": "Get all domains",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/GetDomains/",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"GetDomains",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "RemoveDomain",
+					"item": [
+						{
+							"name": "Remove a domain",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/RemoveDomain/?Name=domain.com",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"RemoveDomain",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "domain.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Check domain",
+					"item": [
+						{
+							"name": "Check a domain",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/CheckHost/?Name=4utf9w0eab.pw",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"CheckHost",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "4utf9w0eab.pw"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check a domain - Missing domain",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://devazurerblcheck.azurewebsites.net/api/CheckHost/?Name=nodomain.com",
+									"protocol": "https",
+									"host": [
+										"devazurerblcheck",
+										"azurewebsites",
+										"net"
+									],
+									"path": [
+										"api",
+										"CheckHost",
+										""
+									],
+									"query": [
+										{
+											"key": "Name",
+											"value": "nodomain.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "fadflkjv09w3$#%@#$9fasdflj98707686fSDF&*^(FD987sdf",
+						"type": "string"
+					},
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "code",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cf6bf9fe-31fb-4ff3-b51a-85fc13683638",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "24bb2228-5614-469a-8f08-fbd9a307b45f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	]
+}
